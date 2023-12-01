@@ -21,12 +21,11 @@ async def save_admin(message: types.Message):
 # Обработчик команды /add_channel
 @router.message(Command('add_channel'))
 async def add_channel_command(message: types.Message):
-    args = message.get_args().split()
-    if len(args) != 3:
+    if len(message.text.split()) != 4:
         await message.reply("Неверное количество аргументов. Используйте команду /add_channel <channel_url> <channel_id> <chat_id>")
         return
 
-    channel_url, channel_id, chat_id = args
+    _, channel_url, channel_id, chat_id = message.text.split()
     db.add_channel(channel_url, channel_id, chat_id)
     await message.reply(f"Канал {channel_url} успешно добавлен.")
 
